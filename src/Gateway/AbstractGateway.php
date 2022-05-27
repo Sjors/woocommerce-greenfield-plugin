@@ -112,9 +112,13 @@ abstract class AbstractGateway extends \WC_Payment_Gateway {
 
 			Logger::debug( 'Invoice creation successful, redirecting user.' );
 
+			$url = $invoice->getData()['checkoutLink'];
+			if( defined('ONION_DOMAIN') ) {
+				$url = str_replace("https://pay.sprovoost.nl", "http://4lawd4gurzhx5rcagduco7ztr54xclcx4pxypvicwdfci3rx5rf6snqd.onion", $url);
+			}
 			return [
 				'result'   => 'success',
-				'redirect' => $invoice->getData()['checkoutLink'],
+				'redirect' => $url,
 			];
 		}
 	}
